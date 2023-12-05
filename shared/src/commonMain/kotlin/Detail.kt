@@ -9,14 +9,18 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.rememberVectorPainter
 import androidx.compose.ui.text.font.FontWeight
+import cafe.adriel.voyager.core.model.ScreenModel
+import cafe.adriel.voyager.core.model.rememberScreenModel
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
+import kotlin.random.Random
 
 @Composable
-fun Detail(item: String, modifier: Modifier = Modifier) {
+fun Detail(item: String, description: String, modifier: Modifier = Modifier) {
     Column(modifier = modifier) {
         Text(text = item, fontWeight = FontWeight.Bold)
+        Text(text = description)
     }
 }
 
@@ -25,6 +29,7 @@ data class DetailsScreen(val item: String) : Screen {
     @Composable
     override fun Content() {
         val navigator = LocalNavigator.currentOrThrow
+        val screenModel = rememberScreenModel { DetailScreenModel() }
 
         Scaffold(
             topBar = {
@@ -35,7 +40,12 @@ data class DetailsScreen(val item: String) : Screen {
                 )
             }
         ) {
-            Detail(item, Modifier)
+            Detail(item, screenModel.getDescription(), Modifier)
         }
     }
+}
+
+class DetailScreenModel : ScreenModel {
+
+    fun getDescription(): String = Random(420).toString()
 }
