@@ -28,6 +28,7 @@ kotlin {
                 implementation(compose.material)
                 @OptIn(org.jetbrains.compose.ExperimentalComposeLibrary::class)
                 implementation(compose.components.resources)
+                implementation("cafe.adriel.voyager:voyager-navigator:1.0.0-rc10")
             }
         }
         val androidMain by getting {
